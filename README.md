@@ -1,2 +1,2 @@
 # passbook
-Passbook Management
+Passbook Management v1.0
