@@ -9,14 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Date;
 
 @RestController
 @RequestMapping(value = "/book")
@@ -59,5 +54,26 @@ public class PassbookInformationController {
         }
 
         return restResponse;
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestResponse> get(@PathVariable("id") Long id){
+        RestResponse restResponse = new RestResponse();
+        try{
+            if(id != null){
+                restResponse.setData(passbookService.get(id));
+                restResponse.setMessageType(CommonConstant.MESSAGE_TYPE_SUCCESS);
+                restResponse.setMessage("Data retrieval successful");
+            }else{
+                restResponse.setMessageType(CommonConstant.MESSAGE_TYPE_FAILED);
+                restResponse.setMessage("Id can not be empty");
+            }
+
+        }catch (Exception ex){
+            restResponse.setMessageType(CommonConstant.MESSAGE_TYPE_FAILED);
+            restResponse.setMessage(ex.getMessage());
+        }
+
+        return new ResponseEntity<RestResponse>(restResponse, HttpStatus.OK);
     }
 }
