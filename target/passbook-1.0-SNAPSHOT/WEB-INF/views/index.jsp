@@ -12,5 +12,7 @@
 </head>
 <body>
     ${currentDate}
+    <a href="/generateReport">Get the today's Currency Rates</a>
+<%--    <spring:url value="/passbookList" var="actionURL" />--%>
 </body>
 </html>
